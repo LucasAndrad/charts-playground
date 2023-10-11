@@ -1,8 +1,39 @@
 import React, {useEffect} from 'react';
-import Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock'
+import HighchartsReact from 'highcharts-react-official'
 import boostModule from 'highcharts/modules/boost';
 
 import './Chart.css';
+
+boostModule(Highcharts);
+
+const defaultOptions = {
+  chart: {
+    zoomType: 'x',
+  },
+  boost: {
+    useGPUTranslations: true
+  },
+  xAxis: {
+    type: 'datetime',
+    scrollbar: {
+      enabled: true,
+      buttonsEnabled: true,
+      height: 25,
+    },
+  },
+  subtitle: {
+      text: 'Using the Boost module'
+  },
+  accessibility: {
+      screenReaderSection: {
+          beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
+      }
+  },
+  tooltip: {
+      valueDecimals: 2
+  }
+};
 
 export const Chart = () => {
   const getData = (n: number) => {
@@ -41,57 +72,53 @@ export const Chart = () => {
     return arr;
   }
 
-  const buildChart = () => {
+  // const buildChart = () => {
+  //   const n = 500000;
+  //   const data = getData(n);
+
+  //   console.time('line');
+  //   Highcharts.chart('chart-example', {
+  //     ...defaultOptions,
+  //     series: [{
+  //         data: data,
+  //         lineWidth: 0.5,
+  //         name: 'Hourly data points'
+  //     }]
+  //   });
+  //   console.timeEnd('line');
+  // }
+
+  // useEffect(() => {
+  //   buildChart();
+  // }, []);
+
+  const getOptions = () => {
     const n = 500000;
     const data = getData(n);
-
-    console.time('line');
-    Highcharts.chart('chart-example', {
-      chart: {
-          zoomType: 'x'
-      },
-      boost: {
-        useGPUTranslations: true
-      },
-      title: {
-          text: 'Highcharts drawing ' + n + ' points'
-      },
-
-      subtitle: {
-          text: 'Using the Boost module'
-      },
-
-      accessibility: {
-          screenReaderSection: {
-              beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-          }
-      },
-
-      tooltip: {
-          valueDecimals: 2
-      },
-
-      xAxis: {
-          type: 'datetime'
-      },
-
+    const options = {
+      ...defaultOptions,
       series: [{
-          data: data,
-          lineWidth: 0.5,
-          name: 'Hourly data points'
-      }]
-    });
-    console.timeEnd('line');
+        data: data,
+        lineWidth: 0.5,
+        name: 'Hourly data points'
+      }],
+      title: {
+        text: 'Highcharts drawing ' + n + ' points'
+      }
+    };
+
+    return options;
   }
 
-  useEffect(() => {
-    buildChart();
-  }, []);
+
   return (
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        <div id="chart-example"></div>
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions()}
+        />
       </div>
     </div>
   )
