@@ -1,10 +1,13 @@
-import React, {useEffect} from 'react';
+import React, { useRef } from 'react';
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import boostModule from 'highcharts/modules/boost';
+import xrange from 'highcharts/modules/xrange';
 
 import './Chart.css';
+import { getMockMarkers } from './mock';
 
+xrange(Highcharts);
 boostModule(Highcharts);
 
 const defaultOptions = {
@@ -13,14 +16,6 @@ const defaultOptions = {
   },
   boost: {
     useGPUTranslations: true
-  },
-  xAxis: {
-    type: 'datetime',
-    scrollbar: {
-      enabled: true,
-      buttonsEnabled: true,
-      height: 25,
-    },
   },
   subtitle: {
       text: 'Using the Boost module'
@@ -31,11 +26,13 @@ const defaultOptions = {
       }
   },
   tooltip: {
-      valueDecimals: 2
+    valueDecimals: 2
   }
 };
 
 export const Chart = () => {
+  const chart = useRef(null);
+
   const getData = (n: number) => {
     let arr = [];
     let i = 0
@@ -46,9 +43,10 @@ export const Chart = () => {
     let spike = 0;
 
     for (
-      i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
+      // i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
+      i = 0;
       i < n;
-      i = i + 1, x = x + 36e5
+      i = i + 1, x = x + 1
     ) {
       if (i % 100 === 0) {
         a = 2 * Math.random();
@@ -72,39 +70,83 @@ export const Chart = () => {
     return arr;
   }
 
-  // const buildChart = () => {
-  //   const n = 500000;
-  //   const data = getData(n);
-
-  //   console.time('line');
-  //   Highcharts.chart('chart-example', {
-  //     ...defaultOptions,
-  //     series: [{
-  //         data: data,
-  //         lineWidth: 0.5,
-  //         name: 'Hourly data points'
-  //     }]
-  //   });
-  //   console.timeEnd('line');
-  // }
-
-  // useEffect(() => {
-  //   buildChart();
-  // }, []);
-
   const getOptions = () => {
     const n = 500000;
     const data = getData(n);
+    const markers = getMockMarkers();
     const options = {
       ...defaultOptions,
-      series: [{
-        data: data,
-        lineWidth: 0.5,
-        name: 'Hourly data points'
-      }],
+      series: [
+        {
+          data: data,
+          lineWidth: 0.5,
+          name: 'Hourly data points',
+        },
+        ...markers,
+      // {
+      //   "name": "marker",
+      //   "type": "xrange",
+      //   "markerId": "HQLrYLi7Hl1",
+      //   "id": "HQLrYLi7Hl1",
+      //   "pointWidth": 20,
+      //   "pointPlacement": "between",
+      //   "allowPointSelect": true,
+      //   "states": {
+      //     "select": {
+      //       "color": "rgba(252, 0, 0, 0.7)",
+      //       "borderColor": "transparent",
+      //       "borderWidth": 0
+      //     }
+      //   },
+      //   "data": [
+      //     {
+      //       "x": 1,
+      //       "x2": 100,
+      //       "y": -2,
+      //       "name": "marker",
+      //       "pointWidth": 20,
+      //       "id": "HQLrYLi7Hl1",
+      //       "markerName": "CentralApnea_3 (A)",
+      //       "color": "rgba(252, 0, 0, 0.5)",
+      //       "dataLabels": {
+      //         "align": "center",
+      //         "inside": false,
+      //         "style": {
+      //           "fontSize": "11px",
+      //           "fontWeight": "normal",
+      //           "textOutline": "1px contrast",
+      //           "cursor": "move"
+      //         },
+      //         "borderWidth": 0,
+      //         "color": "#000",
+      //         "x": 2
+      //       }
+      //     }
+      //   ],
+      //   "events": {},
+      //   "point": {
+      //     "events": {}
+      //   },
+      //   "customEvents": {
+      //     "series": {},
+      //     "point": {}
+      //   }
+      // },
+      ],
       title: {
         text: 'Highcharts drawing ' + n + ' points'
-      }
+      },
+      xAxis: {
+        type: 'datetime',
+        scrollbar: {
+          enabled: true,
+          buttonsEnabled: true,
+          height: 25,
+        },
+        events: {
+          setExtremes: (event: any) => console.log(event),
+        }
+      },
     };
 
     return options;
@@ -116,6 +158,7 @@ export const Chart = () => {
       <div className="container">
         <div>Chart Playground</div>
         <HighchartsReact
+          ref={chart}
           highcharts={Highcharts}
           options={getOptions()}
         />
