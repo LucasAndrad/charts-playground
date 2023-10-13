@@ -22,7 +22,7 @@ export const getMockMarkers = () => {
   const id = shortid.generate();
   const color = getRandomColor();
 
-  const xRange = 100;
+  const xRange = 1000;
 
   const markers = [];
   let i = 1;
@@ -38,7 +38,7 @@ export const getMockMarkers = () => {
         allowPointSelect: true,
         states: {
           select: {
-            color,
+            color: color,
             borderColor: "transparent",
             borderWidth: 0
           }
@@ -52,7 +52,7 @@ export const getMockMarkers = () => {
             pointWidth: 20,
             id: id,
             markerName: "CentralApnea_3 (A)",
-            color,
+            color: color,
             dataLabels: {
               align: "center",
               inside: false,
