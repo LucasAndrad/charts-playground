@@ -2185,6 +2185,11 @@
     "@types/mime" "*"
     "@types/node" "*"
 
+"@types/shortid@^0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/shortid/-/shortid-0.0.30.tgz#28e56a2b71e3ba46c9220e3dfbc845412871fbb7"
+  integrity sha512-b2KUSSggK7MKGwnl82P3qQt/pC5kdmzMYLm5GBKIVHTi7Cic4etapUyqKi2qNWdIC4h9TCsfMJJGd/klplAPLQ==
+
 "@types/sockjs@^0.3.33":
   version "0.3.34"
   resolved "https://registry.yarnpkg.com/@types/sockjs/-/sockjs-0.3.34.tgz#43e10e549b36d2ba2589278f00f81b5d7ccda167"
