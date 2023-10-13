@@ -83,61 +83,14 @@ export const Chart = () => {
           name: 'Hourly data points',
         },
         ...markers,
-      // {
-      //   "name": "marker",
-      //   "type": "xrange",
-      //   "markerId": "HQLrYLi7Hl1",
-      //   "id": "HQLrYLi7Hl1",
-      //   "pointWidth": 20,
-      //   "pointPlacement": "between",
-      //   "allowPointSelect": true,
-      //   "states": {
-      //     "select": {
-      //       "color": "rgba(252, 0, 0, 0.7)",
-      //       "borderColor": "transparent",
-      //       "borderWidth": 0
-      //     }
-      //   },
-      //   "data": [
-      //     {
-      //       "x": 1,
-      //       "x2": 100,
-      //       "y": -2,
-      //       "name": "marker",
-      //       "pointWidth": 20,
-      //       "id": "HQLrYLi7Hl1",
-      //       "markerName": "CentralApnea_3 (A)",
-      //       "color": "rgba(252, 0, 0, 0.5)",
-      //       "dataLabels": {
-      //         "align": "center",
-      //         "inside": false,
-      //         "style": {
-      //           "fontSize": "11px",
-      //           "fontWeight": "normal",
-      //           "textOutline": "1px contrast",
-      //           "cursor": "move"
-      //         },
-      //         "borderWidth": 0,
-      //         "color": "#000",
-      //         "x": 2
-      //       }
-      //     }
-      //   ],
-      //   "events": {},
-      //   "point": {
-      //     "events": {}
-      //   },
-      //   "customEvents": {
-      //     "series": {},
-      //     "point": {}
-      //   }
-      // },
       ],
       title: {
         text: 'Highcharts drawing ' + n + ' points'
       },
       xAxis: {
         type: 'datetime',
+        animation: false,
+        // showInLegend: false,
         scrollbar: {
           enabled: true,
           buttonsEnabled: true,

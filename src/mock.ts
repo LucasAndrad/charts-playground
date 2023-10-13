@@ -19,14 +19,14 @@ function getRandomColor () {
 
 export const getMockMarkers = () => {
   const max = 500 * 1000;
-  const id = shortid.generate();
-  const color = getRandomColor();
-
   const xRange = 1000;
 
   const markers = [];
   let i = 1;
   for(i = 1; i < (max - xRange); i = i + 2 * xRange) {
+    const id = shortid.generate();
+    const color = getRandomColor();
+
     markers.push(
       {
         name: "marker",
@@ -36,6 +36,7 @@ export const getMockMarkers = () => {
         pointWidth: 20,
         pointPlacement: "between",
         allowPointSelect: true,
+        showInLegend: false,
         states: {
           select: {
             color: color,
