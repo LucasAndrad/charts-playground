@@ -1,4 +1,6 @@
 import shortid from 'shortid';
+import { chartSize } from './constants';
+
 
 const colors = [
   'rgb(255, 0, 0)',
@@ -18,12 +20,13 @@ function getRandomColor () {
 }
 
 export const getMockMarkers = () => {
-  const max = 500 * 1000;
-  const xRange = 1000;
+  // return [];
+
+  const xRange = 5000;
 
   const markers = [];
   let i = 1;
-  for(i = 1; i < (max - xRange); i = i + 2 * xRange) {
+  for(i = 1; i < (chartSize - xRange); i = i + 2 * xRange) {
     const id = shortid.generate();
     const color = getRandomColor();
 
