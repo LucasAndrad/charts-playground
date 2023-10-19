@@ -7,7 +7,7 @@ import shortid from 'shortid';
 import { chartSize } from './constants';
 
 import './Chart.css';
-import { getMockMarkers } from './mock';
+import { getMockMarkers, getRandomColor } from './mock';
 
 xrange(Highcharts);
 boostModule(Highcharts);
@@ -68,7 +68,7 @@ export const Chart = () => {
       chart: {
         chartId: shortid.generate(),
         zoomType: 'x',
-        height: 450,
+        height: 180,
       },
       boost: {
         useGPUTranslations: true
@@ -87,11 +87,6 @@ export const Chart = () => {
     };
 
     const data = getData(chartSize);
-    const data2 = getData(chartSize, 25);
-    const data3 = getData(chartSize, 50);
-    const data4 = getData(chartSize, 75);
-    const data5 = getData(chartSize, 100);
-    const data6 = getData(chartSize, 125);
     const markers = getMockMarkers();
     const chartId = shortid.generate();
     const options = {
@@ -101,7 +96,7 @@ export const Chart = () => {
         {
           data: data,
           lineWidth: 2,
-          color: '#CD5C5C',
+          color: getRandomColor(),
           showInLegend: true,
         },
         ...markers,
@@ -136,10 +131,6 @@ export const Chart = () => {
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        {/* <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions()}
-        />
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions()}
@@ -151,7 +142,11 @@ export const Chart = () => {
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions()}
-        /> */}
+        />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions()}
+        />
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions(true)}

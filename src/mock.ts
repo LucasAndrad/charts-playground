@@ -15,12 +15,12 @@ const colors = [
   'rgb(128, 0, 128)',
 ];
 
-function getRandomColor () {
+export const getRandomColor  = () => {
   return colors[Math.floor((Math.random()*colors.length))];
 }
 
 export const getMockMarkers = () => {
-  // return [];
+  return [];
 
   const xRange = 5000;
 
