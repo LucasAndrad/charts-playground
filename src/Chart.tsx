@@ -135,10 +135,6 @@ export const Chart = () => {
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        {/* <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions({})}
-        />
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions({})}
@@ -150,7 +146,11 @@ export const Chart = () => {
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions({})}
-        /> */}
+        />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions({})}
+        />
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions({ showXaxis: true })}
