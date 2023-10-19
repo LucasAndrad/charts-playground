@@ -135,7 +135,7 @@ export const Chart = () => {
           highcharts={Highcharts}
           options={getOptions()}
         />
-        <HighchartsReact
+        {/* <HighchartsReact
           highcharts={Highcharts}
           options={getOptions()}
         />
@@ -150,7 +150,7 @@ export const Chart = () => {
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions(true)}
-        />
+        /> */}
       </div>
     </div>
   )
