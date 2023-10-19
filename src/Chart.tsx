@@ -12,6 +12,10 @@ import { getMockMarkers, getRandomColor } from './mock';
 xrange(Highcharts);
 boostModule(Highcharts);
 
+type OptionsProps = {
+  showXaxis?: boolean;
+};
+
 export const Chart = () => {
   const updateChartsExtremes = (eventExtreme: any, chartId: any) => {
     if (!["zoom", "scrollbar"].includes(eventExtreme.trigger)) return;
@@ -63,7 +67,7 @@ export const Chart = () => {
     return arr;
   }
 
-  const getOptions = (showXaxis: boolean = false) => {
+  const getOptions = ({ showXaxis = false }: OptionsProps) => {
     const defaultOptions = {
       chart: {
         chartId: shortid.generate(),
@@ -131,26 +135,26 @@ export const Chart = () => {
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions()}
-        />
         {/* <HighchartsReact
           highcharts={Highcharts}
-          options={getOptions()}
+          options={getOptions({})}
         />
         <HighchartsReact
           highcharts={Highcharts}
-          options={getOptions()}
+          options={getOptions({})}
         />
         <HighchartsReact
           highcharts={Highcharts}
-          options={getOptions()}
+          options={getOptions({})}
         />
         <HighchartsReact
           highcharts={Highcharts}
-          options={getOptions(true)}
+          options={getOptions({})}
         /> */}
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions({ showXaxis: true })}
+        />
       </div>
     </div>
   )
