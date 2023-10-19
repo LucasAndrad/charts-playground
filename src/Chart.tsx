@@ -1,8 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import boostModule from 'highcharts/modules/boost';
 import xrange from 'highcharts/modules/xrange';
+import shortid from 'shortid';
+import { chartSize } from './constants';
 
 import './Chart.css';
 import { getMockMarkers } from './mock';
@@ -10,30 +12,21 @@ import { getMockMarkers } from './mock';
 xrange(Highcharts);
 boostModule(Highcharts);
 
-const defaultOptions = {
-  chart: {
-    zoomType: 'x',
-  },
-  boost: {
-    useGPUTranslations: true
-  },
-  subtitle: {
-      text: 'Using the Boost module'
-  },
-  accessibility: {
-      screenReaderSection: {
-          beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-      }
-  },
-  tooltip: {
-    valueDecimals: 2
-  }
-};
-
 export const Chart = () => {
-  const chart = useRef(null);
+  const updateChartsExtremes = (eventExtreme: any, chartId: any) => {
+    if (!["zoom", "scrollbar"].includes(eventExtreme.trigger)) return;
 
-  const getData = (n: number) => {
+    Highcharts.charts.forEach((chart: any) => {
+      if (!chart) return;
+      if (chart.userOptions.chartId === chartId) return;
+      const updatedCharts = eventExtreme?.updatedCharts ?? [];
+      if (updatedCharts.includes(chart.userOptions.chartId)) return;
+      updatedCharts.push(chart.userOptions.chartId)
+      chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: eventExtreme.trigger, updatedCharts: updatedCharts });
+    });
+  };
+
+  const getData = (n: number, scale = 0) => {
     let arr = [];
     let i = 0
     let x = 0
@@ -64,40 +57,74 @@ export const Chart = () => {
       }
       arr.push([
         x,
-        2 * Math.sin(i / 100) + a + b + c + spike + Math.random()
+        2 * Math.sin(i / 100) + a + b + c + spike + Math.random() + scale,
       ]);
     }
     return arr;
   }
 
-  const getOptions = () => {
-    const n = 500000;
-    const data = getData(n);
+  const getOptions = (showXaxis: boolean = false) => {
+    const defaultOptions = {
+      chart: {
+        chartId: shortid.generate(),
+        zoomType: 'x',
+        height: 450,
+      },
+      boost: {
+        useGPUTranslations: true
+      },
+      subtitle: {
+          text: ''
+      },
+      accessibility: {
+          screenReaderSection: {
+              beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
+          }
+      },
+      tooltip: {
+        valueDecimals: 2
+      }
+    };
+
+    const data = getData(chartSize);
+    const data2 = getData(chartSize, 25);
+    const data3 = getData(chartSize, 50);
+    const data4 = getData(chartSize, 75);
+    const data5 = getData(chartSize, 100);
+    const data6 = getData(chartSize, 125);
     const markers = getMockMarkers();
+    const chartId = shortid.generate();
     const options = {
       ...defaultOptions,
+      chartId,
       series: [
         {
           data: data,
-          lineWidth: 0.5,
-          name: 'Hourly data points',
+          lineWidth: 2,
+          color: '#CD5C5C',
+          showInLegend: true,
         },
         ...markers,
       ],
       title: {
-        text: 'Highcharts drawing ' + n + ' points'
+        text: ''
       },
       xAxis: {
         type: 'datetime',
         animation: false,
-        // showInLegend: false,
+        visible: showXaxis,
         scrollbar: {
           enabled: true,
           buttonsEnabled: true,
           height: 25,
         },
+        labels: {
+          formatter: function (label: any) {
+            return label.value;
+          }
+        },
         events: {
-          setExtremes: (event: any) => console.log(event),
+          setExtremes: (event: any) => updateChartsExtremes(event, chartId),
         }
       },
     };
@@ -105,15 +132,29 @@ export const Chart = () => {
     return options;
   }
 
-
   return (
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        <HighchartsReact
-          ref={chart}
+        {/* <HighchartsReact
           highcharts={Highcharts}
           options={getOptions()}
+        />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions()}
+        />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions()}
+        />
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions()}
+        /> */}
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions(true)}
         />
       </div>
     </div>
