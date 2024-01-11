@@ -20,13 +20,15 @@ export const Chart = () => {
   const updateChartsExtremes = (eventExtreme: any, chartId: any) => {
     if (!["zoom", "scrollbar"].includes(eventExtreme.trigger)) return;
 
+    const updatedCharts = eventExtreme?.updatedCharts ?? [];
+
     Highcharts.charts.forEach((chart: any) => {
       if (!chart) return;
       if (chart.userOptions.chartId === chartId) return;
-      const updatedCharts = eventExtreme?.updatedCharts ?? [];
       if (updatedCharts.includes(chart.userOptions.chartId)) return;
       updatedCharts.push(chart.userOptions.chartId)
-      chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: eventExtreme.trigger, updatedCharts: updatedCharts });
+      // chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: eventExtreme.trigger, updatedCharts: updatedCharts });
+      chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: 'lucas', updatedCharts: updatedCharts });
     });
   };
 
@@ -123,6 +125,7 @@ export const Chart = () => {
           }
         },
         events: {
+          // setExtremes: (event: any) => console.log(event)
           setExtremes: (event: any) => updateChartsExtremes(event, chartId),
         }
       },

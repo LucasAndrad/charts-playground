@@ -1,5 +1,5 @@
-// import shortid from 'shortid';
-// import { chartSize } from './constants';
+import shortid from 'shortid';
+import { chartSize } from './constants';
 
 
 const colors = [
@@ -20,69 +20,69 @@ export const getRandomColor  = () => {
 }
 
 export const getMockMarkers = () => {
-  return [];
+  // return [];
 
-  // const xRange = 5000;
+  const xRange = 500;
 
-  // const markers = [];
-  // let i = 1;
-  // for(i = 1; i < (chartSize - xRange); i = i + 2 * xRange) {
-  //   const id = shortid.generate();
-  //   const color = getRandomColor();
+  const markers = [];
+  let i = 1;
+  for(i = 1; i < (chartSize - xRange); i = i + 2 * xRange) {
+    const id = shortid.generate();
+    const color = getRandomColor();
 
-  //   markers.push(
-  //     {
-  //       name: "marker",
-  //       type: "xrange",
-  //       markerId: id,
-  //       id: id,
-  //       pointWidth: 20,
-  //       pointPlacement: "between",
-  //       allowPointSelect: true,
-  //       showInLegend: false,
-  //       states: {
-  //         select: {
-  //           color: color,
-  //           borderColor: "transparent",
-  //           borderWidth: 0
-  //         }
-  //       },
-  //       data: [
-  //         {
-  //           x: i,
-  //           x2: i + xRange,
-  //           y: -2,
-  //           name: "marker",
-  //           pointWidth: 20,
-  //           id: id,
-  //           markerName: "CentralApnea_3 (A)",
-  //           color: color,
-  //           dataLabels: {
-  //             align: "center",
-  //             inside: false,
-  //             style: {
-  //               fontSize: "11px",
-  //               fontWeight: "normal",
-  //               textOutline: "1px contrast",
-  //               cursor: "move"
-  //             },
-  //             borderWidth: 0,
-  //             color: "#000",
-  //             x: 2
-  //           }
-  //         }
-  //       ],
-  //       events: {},
-  //       point: {
-  //         events: {}
-  //       },
-  //       customEvents: {
-  //         series: {},
-  //         point: {}
-  //       }
-  //     }
-  //   )
-  // }
+    markers.push(
+      {
+        name: "marker",
+        type: "xrange",
+        markerId: id,
+        id: id,
+        pointWidth: 20,
+        pointPlacement: "between",
+        allowPointSelect: true,
+        showInLegend: false,
+        states: {
+          select: {
+            color: color,
+            borderColor: "transparent",
+            borderWidth: 0
+          }
+        },
+        data: [
+          {
+            x: i,
+            x2: i + xRange,
+            y: -2,
+            name: "marker",
+            pointWidth: 20,
+            id: id,
+            markerName: "CentralApnea_3 (A)",
+            color: color,
+            dataLabels: {
+              align: "center",
+              inside: false,
+              style: {
+                fontSize: "11px",
+                fontWeight: "normal",
+                textOutline: "1px contrast",
+                cursor: "move"
+              },
+              borderWidth: 0,
+              color: "#000",
+              x: 2
+            }
+          }
+        ],
+        events: {},
+        point: {
+          events: {}
+        },
+        customEvents: {
+          series: {},
+          point: {}
+        }
+      }
+    )
+  }
 
-  // return markers;
+  return markers;
 }
