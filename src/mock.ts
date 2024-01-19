@@ -22,7 +22,8 @@ export const getRandomColor  = () => {
 export const getMockMarkers = () => {
   // return [];
 
-  const xRange = 500;
+  // const xRange = 500;
+  const xRange = 770;
 
   const markers = [];
   let i = 1;

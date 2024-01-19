@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, memo } from 'react';
 import Highcharts from 'highcharts/highstock'
 import HighchartsReact from 'highcharts-react-official'
 import boostModule from 'highcharts/modules/boost';
 import xrange from 'highcharts/modules/xrange';
-import shortid from 'shortid';
 import { chartSize } from './constants';
 
 import './Chart.css';
@@ -16,22 +15,7 @@ type OptionsProps = {
   showXaxis?: boolean;
 };
 
-export const Chart = () => {
-  const updateChartsExtremes = (eventExtreme: any, chartId: any) => {
-    if (!["zoom", "scrollbar"].includes(eventExtreme.trigger)) return;
-
-    const updatedCharts = eventExtreme?.updatedCharts ?? [];
-
-    Highcharts.charts.forEach((chart: any) => {
-      if (!chart) return;
-      if (chart.userOptions.chartId === chartId) return;
-      if (updatedCharts.includes(chart.userOptions.chartId)) return;
-      updatedCharts.push(chart.userOptions.chartId)
-      // chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: eventExtreme.trigger, updatedCharts: updatedCharts });
-      chart.xAxis[0].setExtremes(eventExtreme.min, eventExtreme.max, true, false, { trigger: 'lucas', updatedCharts: updatedCharts });
-    });
-  };
-
+export const Chart = memo(function Chart() {
   const getData = (n: number, scale = 0) => {
     let arr = [];
     let i = 0
@@ -42,7 +26,6 @@ export const Chart = () => {
     let spike = 0;
 
     for (
-      // i = 0, x = Date.UTC(new Date().getUTCFullYear(), 0, 1) - n * 36e5;
       i = 0;
       i < n;
       i = i + 1, x = x + 1
@@ -70,34 +53,29 @@ export const Chart = () => {
   }
 
   const getOptions = ({ showXaxis = false }: OptionsProps) => {
-    const defaultOptions = {
-      chart: {
-        chartId: shortid.generate(),
-        zoomType: 'x',
-        height: 180,
-      },
-      boost: {
-        useGPUTranslations: true
-      },
-      subtitle: {
-          text: ''
-      },
-      accessibility: {
-          screenReaderSection: {
-              beforeChartFormat: '<{headingTagName}>{chartTitle}</{headingTagName}><div>{chartSubtitle}</div><div>{chartLongdesc}</div><div>{xAxisDescription}</div><div>{yAxisDescription}</div>'
-          }
-      },
-      tooltip: {
-        valueDecimals: 2
-      }
-    };
-
     const data = getData(chartSize);
     const markers = getMockMarkers();
-    const chartId = shortid.generate();
+
     const options = {
-      ...defaultOptions,
-      chartId,
+      tooltip: { enabled: false },
+      scrollbar: {
+        enabled: false,
+      },
+      chart: {
+          zoomType: 'x',
+          height: 120,
+      },
+
+      boost: {
+          useGPUTranslations: true
+      },
+      navigator: {
+        enabled: false
+      },
+
+      title: {
+          text: ''
+      },
       series: [
         {
           data: data,
@@ -107,53 +85,52 @@ export const Chart = () => {
         },
         ...markers,
       ],
-      title: {
-        text: ''
+      plotOptions: {
+        series: {
+          enableMouseTracking: false,
+          states: {
+            hover: {
+                enabled: false
+            }
+          }
+        },
+        line: {
+          dataGrouping: {
+            enabled: true,
+            groupPixelWidth: 2,
+          },
+        },
+      },
+      rangeSelector:{
+        enabled:false
       },
       xAxis: {
         type: 'datetime',
         animation: false,
         visible: showXaxis,
         scrollbar: {
-          enabled: true,
-          buttonsEnabled: true,
-          height: 25,
+          enabled: false,
         },
-        labels: {
-          formatter: function (label: any) {
-            return label.value;
-          }
-        },
-        events: {
-          // setExtremes: (event: any) => console.log(event)
-          setExtremes: (event: any) => updateChartsExtremes(event, chartId),
-        }
-      },
-    };
-
+      }
+  }
     return options;
   }
+
+  useEffect(() => {
+    console.log('=== charts len',Highcharts.charts.length);
+  });
 
   return (
     <div className="main-container">
       <div className="container">
         <div>Chart Playground</div>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions({})}
-        />
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions({})}
-        />
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions({})}
-        />
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getOptions({})}
-        />
+        {[1,2,3,4,5,6].map((item) => (
+          <HighchartsReact
+            key={`chart-n${item}`}
+            highcharts={Highcharts}
+            options={getOptions({})}
+          />
+        ))}
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions({ showXaxis: true })}
@@ -161,4 +138,4 @@ export const Chart = () => {
       </div>
     </div>
   )
-};
+});
