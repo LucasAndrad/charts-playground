@@ -8,6 +8,8 @@ const scrollStep = 5 * 1000
 const zoomRange = 5 * 1000
 let initialMin = 0;
 
+const handleScrollRight = () => scrollRight();
+
 function scrollRight() {
   console.log('scrollRight was called');
   console.time('scroll-chart');
@@ -30,7 +32,7 @@ function scrollRight() {
 function App() {
   return (
     <div>
-      <button onClick={scrollRight} style={{ margin: 20, padding: 10 }}>Scroll Right</button>
+      <button onClick={handleScrollRight} style={{ margin: 20, padding: 10 }}>Scroll Right</button>
       <Chart />
     </div>
   );

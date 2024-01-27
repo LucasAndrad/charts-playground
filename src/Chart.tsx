@@ -127,13 +127,17 @@ export const Chart = memo(function Chart() {
         {[1,2,3,4,5,6].map((item) => (
           <HighchartsReact
             key={`chart-n${item}`}
-            highcharts={Highcharts}
             options={getOptions({})}
+            highcharts={Highcharts}
+            // constructorType ={'chart'}
+            updateArgs={[false,false,false]}
           />
         ))}
         <HighchartsReact
           highcharts={Highcharts}
           options={getOptions({ showXaxis: true })}
+          // constructorType ={'chart'}
+          updateArgs={[false,false,false]}
         />
       </div>
     </div>

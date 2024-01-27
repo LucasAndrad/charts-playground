@@ -1,4 +1,4 @@
-import shortid from 'shortid';
+// import shortid from 'shortid';
 import { chartSize } from './constants';
 
 
@@ -28,15 +28,15 @@ export const getMockMarkers = () => {
   const markers = [];
   let i = 1;
   for(i = 1; i < (chartSize - xRange); i = i + 2 * xRange) {
-    const id = shortid.generate();
+    // const id = shortid.generate();
     const color = getRandomColor();
 
     markers.push(
       {
         name: "marker",
         type: "xrange",
-        markerId: id,
-        id: id,
+        // markerId: id,
+        // id: id,
         pointWidth: 20,
         pointPlacement: "between",
         allowPointSelect: true,
@@ -55,7 +55,7 @@ export const getMockMarkers = () => {
             y: -2,
             name: "marker",
             pointWidth: 20,
-            id: id,
+            // id: id,
             markerName: "CentralApnea_3 (A)",
             color: color,
             dataLabels: {
