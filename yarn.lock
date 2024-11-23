@@ -1152,6 +1152,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@canvasjs/charts@^3.10.16":
+  version "3.10.16"
+  resolved "https://registry.yarnpkg.com/@canvasjs/charts/-/charts-3.10.16.tgz#917f0a42a7041c3e7024445e7b17f5341a59291c"
+  integrity sha512-LoWstaFkbhe77suaXwmavp/mFundg33Rpp+rQ9Fkz6iqrUNig3V5Tk+SqNt0yc3XYSZ9HR8GN7i9XJUee8e8EQ==
+
 "@csstools/normalize.css@*":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-12.0.0.tgz#a9583a75c3f150667771f30b60d9f059473e62c4"
@@ -1940,6 +1945,11 @@
   integrity sha512-isGhjmBtLIxdHBDl2xGwUzEM8AOyOvWsADWq7rqirdi/ZQoHnLWErHvsThcEzTX8juDRiZtzp2Qkv5bgNh6mAg==
   dependencies:
     "@types/node" "*"
+
+"@types/canvasjs@^1.9.11":
+  version "1.9.11"
+  resolved "https://registry.yarnpkg.com/@types/canvasjs/-/canvasjs-1.9.11.tgz#48423d7a2cca004983a6174cc5c56bb09e18c96f"
+  integrity sha512-sx1sJS7Y9Hy/jd70Zj23xn2c5LE2tXM3Puh0aQoaMdTeHkbwueeTUeN531sepyujj47UZZGvim85DLiOjpiUeQ==
 
 "@types/connect-history-api-fallback@^1.3.5":
   version "1.5.1"
