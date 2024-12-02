@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CanvasJS from '@canvasjs/charts';
 import { chartSize } from "./constants";
 
@@ -39,7 +39,15 @@ const getData = (n: number, scale = 0) => {
 }
 
 export const CanvasCharts = () => {
+  const [chart, setChart] = useState<any | null>(null);
+  const [chart2, setChart2] = useState<any | null>(null);
+  const [scrollStartPosition, setScrollStartPosition] = useState(0);
+
   const getChartOptions = () => {
+    const dataSeries: any = { type: "line", dataPoints: undefined };
+    dataSeries.dataPoints = getData(chartSize);
+    const data = [dataSeries];
+
     const options = {
       zoomEnabled: true,
       animationEnabled: true,
@@ -49,13 +57,53 @@ export const CanvasCharts = () => {
       axisY: {
         lineThickness: 1
       },
-      data: getData(chartSize); // random data
+      data
     };
+
+    return options;
   };
+
+  const handleScrollRight = () => {
+    const finalScrollPosition = scrollStartPosition + (100);
+    chart.axisX[0].set("viewportMinimum", scrollStartPosition);
+    chart.axisX[0].set("viewportMaximum", finalScrollPosition);
+
+    chart2.axisX[0].set("viewportMinimum", scrollStartPosition);
+    chart2.axisX[0].set("viewportMaximum", finalScrollPosition);
+
+    setScrollStartPosition(finalScrollPosition);
+  }
+
+  const handleResetZoom = () => {
+    chart.axisX[0].set("viewportMinimum", 0);
+    chart.axisX[0].set("viewportMaximum", chartSize - 1);
+
+    chart2.axisX[0].set("viewportMinimum", 0);
+    chart2.axisX[0].set("viewportMaximum", chartSize - 1);
+
+    setScrollStartPosition(0);
+  }
+
+  useEffect(() => {
+    const newChart = new CanvasJS.Chart("chartContainer", getChartOptions());
+    newChart.render();
+    setChart(newChart);
+
+    const newChart2 = new CanvasJS.Chart("chartContainer2", getChartOptions());
+    newChart2.render();
+    setChart2(newChart2);
+  }, []);
 
   return (
     <div>
+      <button onClick={handleScrollRight}>Scroll Right</button>
+      <button onClick={handleResetZoom}>Reset Zoom</button>
 
+      {/* <CanvasJS.Chart options={getChartOptions()} /> */}
+      <div id="chartContainer" />
+      <div style={{ width: '100%', height: '100px', marginTop: '500px' }}>
+        <div id="chartContainer2" />
+      </div>
     </div>
   )
 };
