@@ -3,6 +3,7 @@ import Highcharts from 'highcharts/highstock'
 
 import { Chart } from './Chart';
 import { chartSize } from './constants';
+import { ChartsDiffScales } from './ScalesDiff/ChartsDiffScales';
 
 const scrollStep = 5 * 1000
 const zoomRange = 5 * 1000
@@ -33,7 +34,8 @@ function App() {
   return (
     <div>
       <button onClick={handleScrollRight} style={{ margin: 20, padding: 10 }}>Scroll Right</button>
-      <Chart />
+      {/* <Chart /> */}
+      <ChartsDiffScales />
     </div>
   );
 }

@@ -1,1 +1,1 @@
-export const chartSize = 261 * 1000;
+export const chartSize = 320 * 1000;
